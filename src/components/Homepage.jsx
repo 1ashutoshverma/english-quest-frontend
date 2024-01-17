@@ -42,7 +42,7 @@ const Homepage = () => {
     const { isOpen: delIsOpen, onOpen: delOnOpen, onClose: delOnClose } = useDisclosure();
     const [data, setData] = useState([]);
     const [editData, setEditData] = useState({});
-    const { user, refresh, setRefresh } = useContext(AuthContext);
+    const { user, refresh, setRefresh, selectedRole } = useContext(AuthContext);
     const [formData, setFormData] = useState(editData);
     const [filter, setFilter] = useState("");
     const [sort, setSort] = useState("");
@@ -51,10 +51,7 @@ const Homepage = () => {
     const [totalPage, setTotalPage] = useState("")
     const [deleteId, setDeleteId] = useState("")
     const [limit, setLimit] = useState(10)
-
     const cancelRef = React.useRef()
-
-
 
     const getData = async (url) => {
         try {
@@ -131,6 +128,7 @@ const Homepage = () => {
         let query = {};
         query.page = page;
         query.limit = limit;
+        query.role = user.selectedRole
 
         if (filter) {
             query.genre = filter;
@@ -146,9 +144,8 @@ const Homepage = () => {
         let Query = new URLSearchParams(query).toString();
 
         let newUrl = serverUrl + "/books" + (Query ? "?" + Query : "");
-        // console.log(newUrl);
         getData(newUrl);
-    }, [refresh, filter, sort, time, page, limit]);
+    }, [refresh, filter, sort, time, page, limit, user.selectedRole]);
 
 
 
@@ -184,7 +181,7 @@ const Homepage = () => {
                             <Th>Genre</Th>
                             <Th>Created At</Th>
                             {
-                                user.role && user.role.includes("CREATER") ? <><Th>Edit</Th>
+                                user.role && user.selectedRole === "CREATER" ? <><Th>Edit</Th>
                                     <Th>Delete</Th></> : <></>
                             }
 
@@ -221,7 +218,7 @@ const Homepage = () => {
                                     <Td>{ele.genre}</Td>
                                     <Td>{time}</Td>
                                     {
-                                        user.role && user.role.includes("CREATER") ? <>
+                                        user.role && user.selectedRole === "CREATER" ? <>
                                             <Td>
                                                 <Button onClick={() => { setEditData(ele); onOpen(); }} colorScheme='green'>Edit</Button>
                                             </Td>
