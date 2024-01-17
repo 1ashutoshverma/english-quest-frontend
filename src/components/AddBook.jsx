@@ -62,7 +62,7 @@ const AddBook = ({ isOpen, onOpen, onClose }) => {
                                 <option value="Classic">Classic</option>
                                 <option value="Fiction">Fiction</option>
                                 <option value="Dystopian">Dystopian</option>
-                                <option value="Fiction">Fiction</option>
+                                <option value="Novel">Novel</option>
                             </Select>
                             <Button type='submit' >Add Book</Button>
                             <Button colorScheme='blue' onClick={onClose} >
