@@ -64,7 +64,7 @@ const Homepage = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(res.data)
+            // console.log(res.data)
             setTotalPage(res.data.totalPages)
             setData(res.data.data);
         } catch (error) {
