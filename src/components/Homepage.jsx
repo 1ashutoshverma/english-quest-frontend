@@ -165,8 +165,8 @@ const Homepage = () => {
                 </Select>
                 <Select value={sort} onChange={(e) => { setSort(e.target.value); setPage(1) }}>
                     <option value="">Sort by Time</option>
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
+                    <option value="desc">Ascending</option>
+                    <option value="asc">Descending</option>
                 </Select>
                 <Select value={time} onChange={(e) => { setTime(e.target.value); setPage(1) }}>
                     <option value="">Books time</option>
