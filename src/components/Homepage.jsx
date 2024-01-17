@@ -60,7 +60,7 @@ const Homepage = () => {
         try {
             const res = await axios.get(url, {
                 headers: {
-                    "Authorization": `Beare ${user.token}`,
+                    "Authorization": `Bearer ${user.token}`,
                     'Content-Type': 'application/json'
                 }
             });
