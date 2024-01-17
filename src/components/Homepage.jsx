@@ -64,7 +64,7 @@ const Homepage = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            // console.log(res.data)
+            console.log(res.data)
             setTotalPage(res.data.totalPages)
             setData(res.data.data);
         } catch (error) {
@@ -191,7 +191,7 @@ const Homepage = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {data.map((ele, index) => {
+                        {data && data.map((ele, index) => {
                             let date = Date.now() - Date.parse(ele.createdAt);
                             let minutes = Math.floor((date / (1000 * 60)) % 60);
                             let hours = Math.floor((date / (1000 * 60 * 60)) % 24);
