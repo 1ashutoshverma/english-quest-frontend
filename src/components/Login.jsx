@@ -38,7 +38,6 @@ const Login = () => {
                     isClosable: true,
                 })
             }
-            console.log(error)
         }
     }
 

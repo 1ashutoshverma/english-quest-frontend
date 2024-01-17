@@ -14,8 +14,9 @@ import {
     Button,
     useDisclosure,
     Text,
+    CloseButton,
 } from '@chakra-ui/react'
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Modal,
     ModalOverlay,
@@ -34,8 +35,9 @@ import {
     AlertDialogHeader,
     AlertDialogContent,
     AlertDialogOverlay,
-    AlertDialogCloseButton,
 } from '@chakra-ui/react'
+import { Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react';
+
 
 const Homepage = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,20 +54,23 @@ const Homepage = () => {
     const [deleteId, setDeleteId] = useState("")
     const [limit, setLimit] = useState(10)
     const cancelRef = React.useRef()
+    const [error, setError] = useState(null);
 
     const getData = async (url) => {
         try {
             const res = await axios.get(url, {
                 headers: {
-                    "Authorization": `Bearer ${user.token}`,
+                    "Authorization": `Beare ${user.token}`,
                     'Content-Type': 'application/json'
                 }
             });
             // console.log(res.data)
+            setError(null)
             setTotalPage(res.data.totalPages)
             setData(res.data.data);
         } catch (error) {
-            console.log(error);
+            setError(error.response?.data.message)
+            // console.log(error);
         }
     };
 
@@ -81,8 +86,10 @@ const Homepage = () => {
                 setRefresh(!refresh);
                 onClose();
             }
+            setError(null)
         } catch (error) {
-            console.log(error);
+            setError(error.response?.data.message)
+            // console.log(error);
         }
     };
 
@@ -98,8 +105,10 @@ const Homepage = () => {
                 setRefresh(!refresh);
                 onClose();
             }
+            setError(null)
         } catch (error) {
-            console.log(error);
+            setError(error.response?.data.message)
+            // console.log(error);
         }
     };
 
@@ -151,6 +160,15 @@ const Homepage = () => {
 
     return (
         <Box m={"10px"}>
+            {error && (
+                <Alert status="error" variant="solid" mb={4}>
+                    <AlertIcon />
+                    <AlertTitle mr={2}>Error!</AlertTitle>
+                    <AlertDescription>{error}</AlertDescription>
+                    <CloseButton onClick={() => setError(null)} position="absolute" right="8px" top="8px" />
+                </Alert>
+            )}
+
             <Flex gap={"20px"} maxW={"1280px"} margin={"auto"} mt={"15px"}
                 mb={"15px"}>
                 <Select value={filter} onChange={(e) => { setFilter(e.target.value); setPage(1) }}>
